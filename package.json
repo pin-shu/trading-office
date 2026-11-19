@@ -1,0 +1,7 @@
+{
+  "name": "trading-office",
+  "private": true,
+  "scripts": {
+    "start": "bun server.ts"
+  }
+}
