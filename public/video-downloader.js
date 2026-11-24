@@ -355,7 +355,13 @@
         setStatus('轉 MP4 失敗（' + err.message + '），已改下載 .ts 檔。iPhone 相簿不支援 .ts，請用 VLC 播放。');
       });
     }).catch(function (err) {
-      setStatus('下載失敗：' + describeError(err), true);
+      var msg = describeError(err);
+      if (/讀不到播放清單/.test(msg)) {
+        var host = '';
+        try { host = new URL(manifestUrl).host; } catch (e) {}
+        if (host) msg += ' 清單在 ' + host + '（若與影片頁面不同網域，就是對方擋跨網域讀取）。';
+      }
+      setStatus('下載失敗：' + msg, true);
     }).then(finish, finish);
   }
 
@@ -394,7 +400,7 @@
 
   // 測試／除錯用 hook（不影響正常執行）
   window.__videoDownloader = {
-    version: '1.0.0',
+    version: '1.0.1',
     run: main,
     parseMaster: parseMaster,
     parseMedia: parseMedia,
