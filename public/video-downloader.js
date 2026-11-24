@@ -300,7 +300,7 @@
   function describeError(err) {
     var m = (err && err.message) || String(err);
     if (/Failed to fetch|NetworkError|Network request failed|Load failed/i.test(m)) {
-      return '讀不到播放清單（對方擋跨網域讀取或網路問題）。請在影片頁面執行這個工具。';
+      return '讀不到播放清單（對方擋跨網域讀取或網路問題）。可長按上方「串流連結」複製網址，貼到下載 App 或電腦下載。';
     }
     return m;
   }
@@ -391,8 +391,8 @@
       });
     }
     if (m3u8s.length) {
-      m3u8s.slice(1).forEach(function (u, i) {
-        addLink(u, '串流連結 ' + (i + 2));
+      m3u8s.forEach(function (u, i) {
+        addLink(u, '串流連結 ' + (i + 1) + '（長按可複製）');
       });
       downloadHls(m3u8s[0]);
     }
@@ -400,7 +400,7 @@
 
   // 測試／除錯用 hook（不影響正常執行）
   window.__videoDownloader = {
-    version: '1.0.1',
+    version: '1.0.2',
     run: main,
     parseMaster: parseMaster,
     parseMedia: parseMedia,
